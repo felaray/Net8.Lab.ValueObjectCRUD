@@ -24,18 +24,30 @@ namespace DbFirstExample.Controllers
 
         // GET: api/Jobs
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Job>>> GetJob()
+        public async Task<IActionResult> GetJob()
         {
-            var result = await _context.Job.ToListAsync();
-            return result;
+            var result = await _context.Job.Select(c => new
+            {
+                c.Id,
+                c.Title,
+                item = new
+                {
+                    c.ItemWorkTypeId,
+                    c.ItemWorkTypeName,
+                    c.ItemWorkItemId,
+                    c.ItemDescription,
+                }
+            }).ToListAsync();
+            return Ok(result);
         }
 
         [HttpPost]
-        public async Task<ActionResult<Job>> PostJob(string title,int typeId,int workItemId)
+        public async Task<ActionResult<Job>> PostJob(string title, int typeId, int workItemId)
         {
-            var item = await _context.WorkItem.Include(c=>c.WorkType).FirstOrDefaultAsync(x => x.Id == workItemId && x.WorkTypeId == typeId);
+            var item = await _context.WorkItem.Include(c => c.WorkType).FirstOrDefaultAsync(x => x.Id == workItemId && x.WorkTypeId == typeId);
 
-            if (item == null) {
+            if (item == null)
+            {
                 return NotFound();
             }
 

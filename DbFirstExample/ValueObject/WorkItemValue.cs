@@ -1,11 +1,25 @@
-﻿namespace DbFirstExample.ValueObject
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace DbFirstExample.ValueObject
 {
-    // 值物件
-    public record WorkItemValue(int WorkItemId, string Description, int WorkTypeId, string WorkTypeName)
+    //DDD value object
+    [Owned]
+    public class WorkItemValue
     {
-        public int WorkItemId { get; private set; } = WorkItemId;
-        public string Description { get; private set; } = Description;
-        public int WorkTypeId { get; private set; } = WorkTypeId;
-        public string WorkTypeName { get; private set; } = WorkTypeName;
+        public int WorkItemId { get; private set; }
+        public string Description { get; private set; }
+        public int WorkTypeId { get; private set; }
+        public string WorkTypeName { get; private set; }
+
+        public WorkItemValue(int workItemId, string description, int workTypeId, string workTypeName)
+        {
+            WorkItemId = workItemId;
+            Description = description;
+            WorkTypeId = workTypeId;
+            WorkTypeName = workTypeName;
+        }
+
+        //equatable
+
     }
 }
