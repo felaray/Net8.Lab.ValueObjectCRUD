@@ -13,7 +13,7 @@ namespace CodeFirstExample.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Jobs",
+                name: "Job",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -26,11 +26,11 @@ namespace CodeFirstExample.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Jobs", x => x.Id);
+                    table.PrimaryKey("PK_Job", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "WorkTypes",
+                name: "WorkType",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -39,11 +39,11 @@ namespace CodeFirstExample.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_WorkTypes", x => x.Id);
+                    table.PrimaryKey("PK_WorkType", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "WorkItems",
+                name: "WorkItem",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -53,17 +53,17 @@ namespace CodeFirstExample.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_WorkItems", x => x.Id);
+                    table.PrimaryKey("PK_WorkItem", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_WorkItems_WorkTypes_WorkTypeId",
+                        name: "FK_WorkItem_WorkType_WorkTypeId",
                         column: x => x.WorkTypeId,
-                        principalTable: "WorkTypes",
+                        principalTable: "WorkType",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
-                table: "WorkTypes",
+                table: "WorkType",
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
@@ -80,7 +80,7 @@ namespace CodeFirstExample.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "WorkItems",
+                table: "WorkItem",
                 columns: new[] { "Id", "Description", "WorkTypeId" },
                 values: new object[,]
                 {
@@ -97,8 +97,8 @@ namespace CodeFirstExample.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_WorkItems_WorkTypeId",
-                table: "WorkItems",
+                name: "IX_WorkItem_WorkTypeId",
+                table: "WorkItem",
                 column: "WorkTypeId");
         }
 
@@ -106,13 +106,13 @@ namespace CodeFirstExample.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Jobs");
+                name: "Job");
 
             migrationBuilder.DropTable(
-                name: "WorkItems");
+                name: "WorkItem");
 
             migrationBuilder.DropTable(
-                name: "WorkTypes");
+                name: "WorkType");
         }
     }
 }

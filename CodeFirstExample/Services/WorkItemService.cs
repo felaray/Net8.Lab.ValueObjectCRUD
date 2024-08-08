@@ -22,13 +22,13 @@ namespace CodeFirstExample.Services
 
         public async Task<List<WorkItem>> GetWorkItems()
         {
-            var result = await _context.WorkItems.ToListAsync();
+            var result = await _context.WorkItem.ToListAsync();
             return result;
         }
 
         public async Task PostWorkItem(string description, int workTypeId)
         {
-            var workType = await _context.WorkTypes.FindAsync(workTypeId);
+            var workType = await _context.WorkType.FindAsync(workTypeId);
             if (workType == null)
             {
                 throw new Exception($"WorkType {workTypeId} not found");
@@ -40,19 +40,19 @@ namespace CodeFirstExample.Services
                 WorkTypeId = workTypeId,
                 WorkType = workType
             };
-            _context.WorkItems.Add(workItem);
+            _context.WorkItem.Add(workItem);
             await _context.SaveChangesAsync();
         }
 
         public async Task PutWorkItem(int id, string description, int workTypeId)
         {
-            var workItem = await _context.WorkItems.FindAsync(id);
+            var workItem = await _context.WorkItem.FindAsync(id);
             if (workItem == null)
             {
                 throw new Exception($"WorkItem {id} not found");
             }
 
-            var workType = await _context.WorkTypes.FindAsync(workTypeId);
+            var workType = await _context.WorkType.FindAsync(workTypeId);
             if (workType == null)
             {
                 throw new Exception($"WorkType {workTypeId} not found");

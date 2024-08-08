@@ -14,9 +14,9 @@ namespace CodeFirstExample.Data
         {
         }
 
-        public DbSet<WorkType> WorkTypes { get; set; }
-        public DbSet<WorkItem> WorkItems { get; set; }
-        public DbSet<Job> Jobs { get; set; }
+        public DbSet<WorkType> WorkType { get; set; }
+        public DbSet<WorkItem> WorkItem { get; set; }
+        public DbSet<Job> Job { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

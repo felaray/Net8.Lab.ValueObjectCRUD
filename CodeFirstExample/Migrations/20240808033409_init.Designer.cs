@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CodeFirstExample.Migrations
 {
     [DbContext(typeof(CodeFirstExampleContext))]
-    [Migration("20240808025838_init")]
+    [Migration("20240808033409_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -38,7 +38,7 @@ namespace CodeFirstExample.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Jobs");
+                    b.ToTable("Job");
                 });
 
             modelBuilder.Entity("CodeFirstExample.Entities.WorkItem", b =>
@@ -60,7 +60,7 @@ namespace CodeFirstExample.Migrations
 
                     b.HasIndex("WorkTypeId");
 
-                    b.ToTable("WorkItems");
+                    b.ToTable("WorkItem");
 
                     b.HasData(
                         new
@@ -139,7 +139,7 @@ namespace CodeFirstExample.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("WorkTypes");
+                    b.ToTable("WorkType");
 
                     b.HasData(
                         new
@@ -217,7 +217,7 @@ namespace CodeFirstExample.Migrations
 
                             b1.HasKey("JobId");
 
-                            b1.ToTable("Jobs");
+                            b1.ToTable("Job");
 
                             b1.WithOwner()
                                 .HasForeignKey("JobId");
