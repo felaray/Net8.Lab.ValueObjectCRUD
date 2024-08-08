@@ -61,5 +61,49 @@ namespace DbFirstExample.Controllers
 
             return CreatedAtAction("GetJob", new { id = job.Id }, job);
         }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutJob(int id, string title, int typeId, int workItemId)
+        {
+            var job = await _context.Job.FindAsync(id);
+            if (job == null)
+            {
+                return NotFound($"Job with id {id} not found");
+            }
+
+            var item = await _context.WorkItem.Include(c => c.WorkType).FirstOrDefaultAsync(x => x.Id == workItemId && x.WorkTypeId == typeId);
+
+            if (item == null)
+            {
+                return NotFound($"WorkItem with id {workItemId} and typeId {typeId} not found");
+            }
+
+            job.Title = title;
+            job.Item = new WorkItemValue(item.Id, item.Description, item.WorkTypeId, item.WorkType.Name);
+
+            try
+            {
+                await _context.SaveChangesAsync();
+                var result = await _context.Job.Select(c => new
+                {
+                    c.Id,
+                    c.Title,
+                    item = new
+                    {
+                        c.ItemWorkTypeId,
+                        c.ItemWorkTypeName,
+                        c.ItemWorkItemId,
+                        c.ItemDescription,
+                    }
+                }).SingleAsync(x => x.Id == id);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+
+        }
     }
 }
